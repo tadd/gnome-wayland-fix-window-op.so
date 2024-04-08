@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #define _GNU_SOURCE
 #include <dlfcn.h>
 
@@ -11,8 +13,22 @@ static void ctor(void)
     orig_raise = dlsym(RTLD_NEXT, "gdk_window_raise");
 }
 
+static bool is_managable(GdkWindow *window)
+{
+    window = window;
+    return false;
+}
+
+static void my_raise(GdkWindow *window)
+{
+    orig_raise(window);
+}
+
 void gdk_window_raise(GdkWindow *window)
 {
     fprintf(stderr, "raised!\n");
-    orig_raise(window);
+    if (is_managable(window))
+        my_raise(window);
+    else
+        orig_raise(window);
 }
