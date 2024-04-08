@@ -1,14 +1,14 @@
-GNOME Wayland: fix `gtk_window_*`
+GNOME Wayland: fix `gdk_window_*`
 ================================
 
-This GTK3 Module fixes `gtk_window_raise()`/`lower()` to be effective with GNOME Shell on
-Wayland.
+This preloaded library fixes `gdk_window_raise()`/`lower()` to be effective with GNOME
+Shell on Wayland.
 
 ## Usage
 
-1. `./configure && make && make install`
-2. Add `gnome-wayland-fix-gdk-window` in the environment variable `GTK_MODULES`
-3. Launch any GTK3 application
+1. `make`
+2. Launch any GTK3 application with `LD_PRELOAD=gnome-wayland-fix-gdk-window.c`
+3. Wait for the canonical specs and impls
 
 ## Tricks
 
