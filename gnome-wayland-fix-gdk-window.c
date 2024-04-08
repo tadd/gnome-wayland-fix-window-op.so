@@ -14,5 +14,5 @@ static void ctor(void)
 void gdk_window_raise(GdkWindow *window)
 {
     fprintf(stderr, "raised!\n");
-    return orig_raise(window);
+    orig_raise(window);
 }
