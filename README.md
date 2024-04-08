@@ -7,8 +7,9 @@ Shell on Wayland.
 ## Usage
 
 1. `make`
-2. Launch any GTK3 application with `LD_PRELOAD=gnome-wayland-fix-gdk-window.c`
-3. Wait for the canonical specs and impls
+2. Launch any GTK3 application with `LD_PRELOAD=$PWD/gnome-wayland-fix-gdk-window.c`
+3. Enjoy your ordinary and normal desktop life
+4. Wait for the canonical specs and impls to remove this hack
 
 ## Tricks
 
