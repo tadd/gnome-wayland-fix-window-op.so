@@ -24,6 +24,7 @@ static void my_raise(GdkWindow *window)
     orig_raise(window);
 }
 
+//Overriding function
 void gdk_window_raise(GdkWindow *window)
 {
     fprintf(stderr, "raised!\n");
