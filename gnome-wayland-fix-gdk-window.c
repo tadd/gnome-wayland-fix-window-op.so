@@ -33,8 +33,10 @@ static void dtor(void)
 
 static bool is_managable(GdkWindow *window)
 {
-    window = window;
-    return false;
+    return orig_raise != NULL &&
+        meta_raise != NULL &&
+        window != NULL &&
+        false;
 }
 
 static void my_raise(GdkWindow *window)
