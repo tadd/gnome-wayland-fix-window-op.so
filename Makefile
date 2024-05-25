@@ -11,7 +11,7 @@ CFLAGS=-Og -ggdb3 -fPIC -Wall -Wextra $(PKG_CFLAGS)
 all: $(LIB)
 
 $(OBJ): $(SRC)
-	$(CC) $(CFLAGS) -fPIC -c $<
+	$(CC) $(CFLAGS) -c $<
 
 $(LIB): $(OBJ)
 	$(CC) $(CFLAGS) -shared -o $@ $<
