@@ -4,8 +4,9 @@ OBJ=$(base).o
 LIB=$(base).so
 
 CC=gcc
-GTK_CFLAGS=$(shell pkg-config --cflags gtk+-3.0)
-CFLAGS=-Og -ggdb3 -fPIC -Wall -Wextra $(GTK_CFLAGS)
+pkgs=gtk+-3.0 libmutter-11
+PKG_CFLAGS=$(shell pkg-config --cflags $(pkgs))
+CFLAGS=-Og -ggdb3 -fPIC -Wall -Wextra $(PKG_CFLAGS)
 
 all: $(LIB)
 
