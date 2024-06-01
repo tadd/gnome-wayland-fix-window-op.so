@@ -20,8 +20,6 @@ static void ctor(void)
     if (libmutter == NULL)
         return;
     meta_raise = dlsym(libmutter, "meta_window_raise");
-    fprintf(stderr, "orig: %p, libmutter: %p, meta_raise: %p\n",
-            orig_raise, libmutter, meta_raise);
 }
 
 __attribute__ ((destructor))
@@ -47,7 +45,6 @@ static void my_raise(GdkWindow *window)
 //Overriding function
 void gdk_window_raise(GdkWindow *window)
 {
-    fprintf(stderr, "raised!\n");
     if (is_managable(window))
         my_raise(window);
     else
