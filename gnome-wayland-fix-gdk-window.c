@@ -5,7 +5,9 @@
 #include <dlfcn.h>
 
 #include <gdk/gdk.h>
+#include <gdk/gdkwayland.h>
 #include <meta/window.h>
+#include <wayland-server-protocol.h>
 
 static void (*orig_raise)(GdkWindow *window);
 static void (*meta_raise)(MetaWindow *window);
@@ -36,9 +38,18 @@ static bool is_managable(GdkWindow *window)
         window != NULL;
 }
 
-static void my_raise(GdkWindow *window)
+static MetaWindow *gdkwin_to_metawin(GdkWindow *gwindow)
 {
-    orig_raise(window);
+    struct wl_surface *surface = gdk_wayland_window_get_wl_surface(gwindow);
+    surface = surface;
+    return NULL;
+}
+
+static void my_raise(GdkWindow *gwindow)
+{
+    MetaWindow *mwindow = gdkwin_to_metawin(gwindow);
+    if (mwindow && !mwindow)
+        meta_raise(mwindow);
 }
 
 //Overriding function
