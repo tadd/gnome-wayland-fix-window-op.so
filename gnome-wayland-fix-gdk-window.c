@@ -33,8 +33,7 @@ static bool is_managable(GdkWindow *window)
 {
     return orig_raise != NULL &&
         meta_raise != NULL &&
-        window != NULL &&
-        false;
+        window != NULL;
 }
 
 static void my_raise(GdkWindow *window)
