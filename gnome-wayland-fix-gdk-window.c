@@ -49,7 +49,7 @@ static void my_raise(GdkWindow *gwindow)
 {
     MetaWindow *mwindow = gdkwin_to_metawin(gwindow);
     if (mwindow && !mwindow)
-        meta_raise(mwindow);
+        (*meta_raise)(mwindow);
 }
 
 //Overriding function
@@ -58,5 +58,5 @@ void gdk_window_raise(GdkWindow *window)
     if (is_managable(window))
         my_raise(window);
     else
-        orig_raise(window);
+        (*orig_raise)(window);
 }
