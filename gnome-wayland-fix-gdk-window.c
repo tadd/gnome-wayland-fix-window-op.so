@@ -10,31 +10,16 @@
 #include <wayland-server-protocol.h>
 
 static void (*orig_raise)(GdkWindow *window);
-static void (*meta_raise)(MetaWindow *window);
-static void *libmutter;
 
 __attribute__ ((constructor))
 static void ctor(void)
 {
     orig_raise = dlsym(RTLD_NEXT, "gdk_window_raise");
-
-    libmutter = dlopen("libmutter-11.so.0", RTLD_NOW);
-    if (libmutter == NULL)
-        return;
-    meta_raise = dlsym(libmutter, "meta_window_raise");
-}
-
-__attribute__ ((destructor))
-static void dtor(void)
-{
-    if (libmutter)
-        dlclose(libmutter);
 }
 
 static bool is_managable(GdkWindow *window)
 {
     return orig_raise != NULL &&
-        meta_raise != NULL &&
         window != NULL;
 }
 
@@ -49,7 +34,7 @@ static void my_raise(GdkWindow *gwindow)
 {
     MetaWindow *mwindow = gdkwin_to_metawin(gwindow);
     if (mwindow && !mwindow)
-        (*meta_raise)(mwindow);
+        meta_window_raise(mwindow);
 }
 
 //Overriding function
