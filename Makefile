@@ -6,7 +6,7 @@ CC=gcc
 pkgs=gtk+-3.0 libmutter-11
 pkg_cflags=$(shell pkg-config --cflags $(pkgs))
 CFLAGS=-O0 -ggdb3 -fPIC -Wall -Wextra $(pkg_cflags)
-LDFLAGS=$(shell pkg-config --libs $(pkgs))
+LDFLAGS=$(shell pkg-config --libs $(pkgs)) -ldl
 
 all: $(LIB)
 
