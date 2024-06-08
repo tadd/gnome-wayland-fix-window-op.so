@@ -43,6 +43,5 @@ void gdk_window_raise(GdkWindow *window)
 {
     if (is_managable(window))
         my_raise(window);
-    else
-        (*orig_raise)(window);
+    (*orig_raise)(window);
 }
