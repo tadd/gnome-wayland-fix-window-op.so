@@ -4,6 +4,7 @@
 
 #define _GNU_SOURCE
 #include <dlfcn.h>
+#undef _GNU_SOURCE
 
 #include <gdk/gdk.h>
 #include <gdk/gdkwayland.h>
