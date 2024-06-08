@@ -17,7 +17,7 @@ TBA
 
 ## Development
 
-https://github.com/tadd/gnome-shell-gdk-window-raise-lower.so
+https://github.com/tadd/gnome-wayland-fix-gdk-window.so
 
 ## License
 
