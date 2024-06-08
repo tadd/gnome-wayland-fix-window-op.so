@@ -20,7 +20,8 @@ static void ctor(void)
 static bool is_managable(GdkWindow *window)
 {
     return orig_raise != NULL &&
-        window != NULL;
+        window != NULL &&
+        GDK_IS_WAYLAND_WINDOW(window);
 }
 
 static MetaWindow *gdkwin_to_metawin(GdkWindow *gwindow)
@@ -33,7 +34,7 @@ static MetaWindow *gdkwin_to_metawin(GdkWindow *gwindow)
 static void my_raise(GdkWindow *gwindow)
 {
     MetaWindow *mwindow = gdkwin_to_metawin(gwindow);
-    if (mwindow && !mwindow)
+    if (mwindow)
         meta_window_raise(mwindow);
 }
 
