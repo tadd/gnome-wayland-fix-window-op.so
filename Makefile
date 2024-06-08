@@ -11,7 +11,7 @@ LDFLAGS=$(shell pkg-config --libs $(pkgs)) -ldl
 all: $(LIB)
 
 $(LIB): $(SRC)
-	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o $@ $<
+	$(CC) $(CFLAGS) -shared -o $@ $< $(LDFLAGS)
 
 clean:
 	rm -f *.o *.so
