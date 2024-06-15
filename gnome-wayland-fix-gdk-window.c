@@ -25,10 +25,29 @@ static bool is_managable(GdkWindow *window)
     return window != NULL && GDK_IS_WAYLAND_WINDOW(window);
 }
 
-static MetaWindow *gdkwin_to_metawin(GdkWindow *gwindow)
+static int cmp_gtkw_gdkw(const void *t, const void *d)
 {
-    struct wl_surface *surface = gdk_wayland_window_get_wl_surface(gwindow);
-    surface = surface;
+    const GtkWindow *gtkw = t;
+    const GdkWindow *gdkw = d;
+    g_autoptr(GdkWindow) gdkw2 = gtk_widget_get_window(GTK_WIDGET(gtkw));
+    return !(gdkw == gdkw2); // return 0 if found
+}
+
+static GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
+{
+    g_autoptr(GList) all = gtk_window_list_toplevels();
+    if (all == NULL)
+        return NULL;
+    GList *found = g_list_find_custom(all, gdkw, cmp_gtkw_gdkw);
+    GtkWindow *w = found ? found->data : NULL;
+    return w;
+}
+
+static MetaWindow *gdkwin_to_metawin(GdkWindow *gdkw)
+{
+    GtkWindow *w = gdkwin_to_gtkwin(gdkw);
+    assert(w);
+    fprintf(stderr, "(%p).title: %s\n", w, gtk_window_get_title(w));
     return NULL;
 }
 
