@@ -6,10 +6,9 @@
 #include <dlfcn.h>
 #undef _GNU_SOURCE
 
+#include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkwayland.h>
-#include <meta/window.h>
-#include <wayland-server-protocol.h>
 
 static void (*orig_raise)(GdkWindow *window);
 
@@ -43,19 +42,23 @@ static const GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
     return w;
 }
 
-static MetaWindow *gdkwin_to_metawin(GdkWindow *gdkw)
+static const char *gdkwin_get_title(GdkWindow *gdkw)
 {
-    const GtkWindow *w = gdkwin_to_gtkwin(gdkw);
-    assert(w);
-    fprintf(stderr, "(%p).title: %s\n", w, gtk_window_get_title((GtkWindow*)w));
-    return NULL;
+    const GtkWindow *gtkw = gdkwin_to_gtkwin(gdkw);
+    assert(gtkw && "needs valid GTKWindow");
+    return gtk_window_get_title((GtkWindow*)gtkw);
 }
 
-static void my_raise(GdkWindow *gwindow)
+static void activate_by_title(const char *title)
 {
-    MetaWindow *mwindow = gdkwin_to_metawin(gwindow);
-    if (mwindow)
-        meta_window_raise(mwindow);
+    title = title;
+}
+
+static void my_raise(GdkWindow *window)
+{
+    const char *title = gdkwin_get_title(window);
+    if (title)
+        activate_by_title(title);
 }
 
 //Overriding function
