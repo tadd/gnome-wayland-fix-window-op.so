@@ -3,7 +3,7 @@ SRC=$(base).c
 LIB=$(base).so
 
 CC=gcc
-pkgs=gio-2.0 gtk+-3.0 libmutter-11
+pkgs=gio-2.0 gtk+-3.0
 pkg_cflags=$(shell pkg-config --cflags $(pkgs))
 CFLAGS=-O2 -ggdb3 -fPIC -Wall -Wextra $(pkg_cflags)
 LDFLAGS=$(shell pkg-config --libs $(pkgs)) -ldl
