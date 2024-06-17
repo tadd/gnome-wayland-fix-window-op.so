@@ -20,14 +20,11 @@ static void ctor(void)
     if (orig_raise == NULL)
         return;
     g_autoptr(GError) error = NULL;
-    proxy = g_dbus_proxy_new_for_bus_sync(G_BUS_TYPE_SESSION,
-                                          G_DBUS_PROXY_FLAGS_NONE,
-                                          NULL,
-                                          "org.gnome.Shell",
+    proxy = g_dbus_proxy_new_for_bus_sync(G_BUS_TYPE_SESSION, G_DBUS_PROXY_FLAGS_NONE,
+                                          NULL, "org.gnome.Shell",
                                           "/de/lucaswerkmeister/ActivateWindowByTitle",
                                           "de.lucaswerkmeister.ActivateWindowByTitle",
-                                          NULL,
-                                          &error);
+                                          NULL, &error);
     if (error)
         proxy = NULL; // ignore error and stay NULL
 }
@@ -57,8 +54,7 @@ static const GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
     if (all == NULL)
         return NULL;
     GList *found = g_list_find_custom(all, gdkw, cmp_gtkw_gdkw);
-    GtkWindow *w = found ? found->data : NULL;
-    return w;
+    return found ? found->data : NULL;
 }
 
 static const char *gdkwin_get_title(GdkWindow *gdkw)
@@ -75,9 +71,7 @@ static void activate_by_title(const char *title)
 {
     g_autoptr(GError) error = NULL;
     g_autoptr(GVariant) ret =
-        g_dbus_proxy_call_sync(proxy,
-                               "activateByTitle",
-                               g_variant_new("(s)", title),
+        g_dbus_proxy_call_sync(proxy, "activateByTitle", g_variant_new("(s)", title),
                                G_DBUS_CALL_FLAGS_NONE, -1, NULL, &error);
 #ifdef DEBUG
     g_autoptr(GVariant) found = g_variant_get_child_value(ret, 0);
