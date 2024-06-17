@@ -33,7 +33,7 @@ static int cmp_gtkw_gdkw(const void *t, const void *d)
     return !(gdkw == gdkw2); // return 0 if found
 }
 
-static GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
+static const GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
 {
     g_autoptr(GList) all = gtk_window_list_toplevels();
     if (all == NULL)
@@ -45,9 +45,9 @@ static GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
 
 static MetaWindow *gdkwin_to_metawin(GdkWindow *gdkw)
 {
-    GtkWindow *w = gdkwin_to_gtkwin(gdkw);
+    const GtkWindow *w = gdkwin_to_gtkwin(gdkw);
     assert(w);
-    fprintf(stderr, "(%p).title: %s\n", w, gtk_window_get_title(w));
+    fprintf(stderr, "(%p).title: %s\n", w, gtk_window_get_title((GtkWindow*)w));
     return NULL;
 }
 
