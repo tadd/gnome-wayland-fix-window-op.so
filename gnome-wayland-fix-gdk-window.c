@@ -1,4 +1,3 @@
-#include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -18,9 +17,10 @@ __attribute__ ((constructor))
 static void ctor(void)
 {
     orig_raise = dlsym(RTLD_NEXT, "gdk_window_raise");
-    assert(orig_raise && "only GTK3 app is supported currently.");
+    if (orig_raise == NULL)
+        return;
     g_autoptr(GError) error = NULL;
-    proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+    proxy = g_dbus_proxy_new_for_bus_sync(G_BUS_TYPE_SESSION,
                                           G_DBUS_PROXY_FLAGS_NONE,
                                           NULL,
                                           "org.gnome.Shell",
@@ -28,8 +28,8 @@ static void ctor(void)
                                           "de.lucaswerkmeister.ActivateWindowByTitle",
                                           NULL,
                                           &error);
-
-    assert(!error && "got error");
+    if (error)
+        proxy = NULL; // ignore error and stay NULL
 }
 
 __attribute__ ((destructor))
@@ -40,7 +40,7 @@ static void dtor(void)
 
 static bool is_managable(GdkWindow *window)
 {
-    return window != NULL && GDK_IS_WAYLAND_WINDOW(window);
+    return proxy != NULL && window != NULL && GDK_IS_WAYLAND_WINDOW(window);
 }
 
 static int cmp_gtkw_gdkw(const void *t, const void *d)
@@ -64,7 +64,10 @@ static const GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
 static const char *gdkwin_get_title(GdkWindow *gdkw)
 {
     const GtkWindow *gtkw = gdkwin_to_gtkwin(gdkw);
-    assert(gtkw && "needs valid GTKWindow");
+    if (gtkw == NULL) {
+        g_warning("GdkWindow:%p not found in the GtkWindow toplevel list", gdkw);
+        return NULL;
+    }
     return gtk_window_get_title((GtkWindow*)gtkw);
 }
 
