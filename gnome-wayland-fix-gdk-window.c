@@ -73,11 +73,9 @@ static void activate_by_title(const char *title)
     g_autoptr(GVariant) ret =
         g_dbus_proxy_call_sync(proxy, "activateByTitle", g_variant_new("(s)", title),
                                G_DBUS_CALL_FLAGS_NONE, -1, NULL, &error);
-#ifdef DEBUG
     g_autoptr(GVariant) found = g_variant_get_child_value(ret, 0);
-    fprintf(stderr, "%s: %s\n",
-            g_variant_get_boolean(found) ? "found!" : "not found...", title);
-#endif
+    if (!g_variant_get_boolean(found))
+        g_warning("title:%s not found", title);
 }
 
 static void my_raise(GdkWindow *window)
