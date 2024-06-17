@@ -71,13 +71,11 @@ static const char *gdkwin_get_title(GdkWindow *gdkw)
 static void activate_by_title(const char *title)
 {
     g_autoptr(GError) error = NULL;
-    g_autoptr(GVariant) ret = g_dbus_proxy_call_sync(proxy,
-                                                     "activateByTitle",
-                                                     g_variant_new("(s)", title),
-                                                     G_DBUS_CALL_FLAGS_NONE,
-                                                     -1,
-                                                     NULL,
-                                                     &error);
+    g_autoptr(GVariant) ret =
+        g_dbus_proxy_call_sync(proxy,
+                               "activateByTitle",
+                               g_variant_new("(s)", title),
+                               G_DBUS_CALL_FLAGS_NONE, -1, NULL, &error);
 #ifdef DEBUG
     g_autoptr(GVariant) found = g_variant_get_child_value(ret, 0);
     fprintf(stderr, "%s: %s\n",
