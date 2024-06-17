@@ -6,6 +6,7 @@
 #include <dlfcn.h>
 #undef _GNU_SOURCE
 
+#include <gio/gio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkwayland.h>
