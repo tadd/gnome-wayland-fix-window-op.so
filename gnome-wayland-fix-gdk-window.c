@@ -35,7 +35,8 @@ static void dtor(void)
 
 static bool is_managable(GdkWindow *window)
 {
-    return proxy != NULL && window != NULL && GDK_IS_WAYLAND_WINDOW(window);
+    return proxy != NULL && window != NULL && GDK_IS_WAYLAND_WINDOW(window) &&
+        gdk_window_get_window_type(window) == GDK_WINDOW_TOPLEVEL;
 }
 
 static int cmp_gtkw_gdkw(const void *t, const void *d)
