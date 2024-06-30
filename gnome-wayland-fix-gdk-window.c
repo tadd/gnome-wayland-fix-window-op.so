@@ -30,7 +30,7 @@ static void ctor(void)
 __attribute__ ((destructor))
 static void dtor(void)
 {
-    g_object_ref(proxy);
+    g_object_unref(proxy);
 }
 
 static bool is_managable(GdkWindow *window)
