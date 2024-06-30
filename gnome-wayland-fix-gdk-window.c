@@ -44,10 +44,10 @@ static int cmp_gtkw_gdkw(const void *t, const void *d)
     const GtkWindow *gtkw = t;
     const GdkWindow *gdkw = d;
     g_autoptr(GdkWindow) gdkw2 = gtk_widget_get_window(GTK_WIDGET(gtkw));
-    return !(gdkw == gdkw2); // return 0 if found
+    return gdkw != gdkw2; // return 0 if found
 }
 
-static const GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
+static GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
 {
     g_autoptr(GList) all = gtk_window_list_toplevels();
     if (all == NULL)
@@ -58,12 +58,12 @@ static const GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
 
 static const char *gdkwin_get_title(GdkWindow *gdkw)
 {
-    const GtkWindow *gtkw = gdkwin_to_gtkwin(gdkw);
+    GtkWindow *gtkw = gdkwin_to_gtkwin(gdkw);
     if (gtkw == NULL) {
         g_warning("GdkWindow:%p not found in the GtkWindow toplevel list", gdkw);
         return NULL;
     }
-    return gtk_window_get_title((GtkWindow*)gtkw);
+    return gtk_window_get_title(gtkw);
 }
 
 static void activate_by_title(const char *title)
