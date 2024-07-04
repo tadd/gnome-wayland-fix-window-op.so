@@ -25,8 +25,9 @@ needs to be installed.
 1. `make`.
 2. Launch any GTK3 application with
    `LD_PRELOAD=$PWD/gnome-wayland-fix-window-op.so <yourappnamehere>`.
-3. Enjoy your ordinary and normal desktop life.
-4. Wait for the canonical specs and impls to remove this hack.
+
+Enjoy your ordinary and normal desktop life, and wait for the canonical specs
+and impls to remove this hack.
 
 ## Tricks
 
