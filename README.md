@@ -2,9 +2,7 @@ GNOME on Wayland: Fix `gdk_window_*` Operations
 ===============================================
 
 This preloaded library fixes some GTK3 window operations like
-[`gdk_window_raise`](https://docs.gtk.org/gdk3/method.Window.raise.html) to
-be effective with GNOME/Mutter on Wayland.
-
+`gdk_window_raise` to be effective with GNOME/Mutter on Wayland.
 
 For example, you can use the elisp function
 [`raise-frame`](https://www.gnu.org/software/emacs/manual/html_node/elisp/Raising-and-Lowering.html#index-raise_002dframe)
@@ -12,8 +10,10 @@ normally when you're using PGTK Emacs.
 
 ## Scope
 
-Unfortunately, `gdk_window_raise` is the only function we can fix at this
-time, but we plan to fix others using the same mechanism.
+Unfortunately,
+[`gdk_window_raise`](https://docs.gtk.org/gdk3/method.Window.raise.html) is
+the only function we can fix at this time, but we plan to fix others using
+the same mechanism.
 
 ## Requirements
 
