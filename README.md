@@ -10,10 +10,9 @@ normally when you're using PGTK Emacs.
 
 ## Scope
 
-Unfortunately,
 [`gdk_window_raise`](https://docs.gtk.org/gdk3/method.Window.raise.html) is
-the only function we can fix at this time, but we plan to fix others using
-the same mechanism.
+the only function we can fix at this time. We plan to fix others using the
+same mechanism.
 
 ## Requirements
 
@@ -23,11 +22,11 @@ needs to be installed.
 
 ## Usage
 
-1. `make`
+1. `make`.
 2. Launch any GTK3 application with
-   `LD_PRELOAD=$PWD/gnome-wayland-fix-window-op.so <yourappnamehere>`
-3. Enjoy your ordinary and normal desktop life
-4. Wait for the canonical specs and impls to remove this hack
+   `LD_PRELOAD=$PWD/gnome-wayland-fix-window-op.so <yourappnamehere>`.
+3. Enjoy your ordinary and normal desktop life.
+4. Wait for the canonical specs and impls to remove this hack.
 
 ## Tricks
 
