@@ -21,7 +21,8 @@ needs to be installed.
 
 ## Tricks
 
-[`LD_PRELOAD`](https://man7.org/linux/man-pages/man8/ld.so.8.html#ENVIRONMENT) and D-Bus.
+[`LD_PRELOAD`](https://man7.org/linux/man-pages/man8/ld.so.8.html#ENVIRONMENT)
+and [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/).
 
 TBA
 
