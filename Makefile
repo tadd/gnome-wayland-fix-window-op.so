@@ -1,4 +1,4 @@
-base=gnome-wayland-fix-gdk-window
+base=gnome-wayland-fix-window-op
 SRC=$(base).c
 LIB=$(base).so
 
