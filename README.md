@@ -39,3 +39,11 @@ https://github.com/tadd/gnome-wayland-fix-window-op.so
 ## License
 
 LGPL 2.1. See COPYING.md.
+
+## References
+
+* Satoru Takabayashi, Fumitoshi Ukai, Yusuke Sato, Shinichiro Hamaji, and
+  Kazuyuki Shudo. *Hack #61: Using "LD_PRELOAD" to wrap existing functions* in
+  [**Binary Hacks**](https://www.oreilly.co.jp/books/4873112885/) (in Japanese).
+  O'Reilly Japan, pp 228-230, Nov. 2006.
+  * [English page](http://0xcc.net/binhacks/eabout.html) also available
