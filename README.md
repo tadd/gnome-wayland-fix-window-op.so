@@ -15,7 +15,8 @@ needs to be installed.
 ## Usage
 
 1. `make`
-2. Launch any GTK3 application with `LD_PRELOAD=$PWD/gnome-wayland-fix-window-op.so`
+2. Launch any GTK3 application with
+   `LD_PRELOAD=$PWD/gnome-wayland-fix-window-op.so <yourappnamehere>`
 3. Enjoy your ordinary and normal desktop life
 4. Wait for the canonical specs and impls to remove this hack
 
@@ -24,7 +25,10 @@ needs to be installed.
 [`LD_PRELOAD`](https://man7.org/linux/man-pages/man8/ld.so.8.html#ENVIRONMENT)
 and [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/).
 
-TBA
+1. Override a target function with our implementation with `LD_LIBRARY`.
+2. Call the original function when we don't need to change its behavior.
+3. Otherwise, call the D-Bus method "activateByTitle" with the window title
+   taken from the target function's argument.
 
 ## Development
 
