@@ -5,6 +5,8 @@ This preloaded library fixes some GTK3 window operations like
 [`gdk_window_raise`](https://docs.gtk.org/gdk3/method.Window.raise.html)
 to be effective with GNOME/Mutter on Wayland.
 
+Unfortunately, `gdk_window_raise` is the only function we can fix at this
+time, but we plan to fix others using the same mechanism.
 
 ## Requirement
 
