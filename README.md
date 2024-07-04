@@ -8,9 +8,9 @@ to be effective with GNOME/Mutter on Wayland.
 Unfortunately, `gdk_window_raise` is the only function we can fix at this
 time, but we plan to fix others using the same mechanism.
 
-## Requirement
+## Requirements
 
-GNOME extension [Activate Window by
+GNOME extension [Activate Window By
 Title](https://extensions.gnome.org/extension/5021/activate-window-by-title/)
 needs to be installed.
 
@@ -28,9 +28,10 @@ needs to be installed.
 and [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/).
 
 1. Override a target function with our implementation with `LD_LIBRARY`.
-2. Call the original function when we don't need to change its behavior.
-3. Otherwise, call the D-Bus method "activateByTitle" with the window title
-   taken from the target function's argument.
+2. If we don't need to change its behavior, call the original function as is.
+3. Otherwise, call the D-Bus method
+   [activateByTitle](https://github.com/lucaswerkmeister/activate-window-by-title#d-bus-usage)
+   with the window title taken from the target function's argument.
 
 ## Development
 
