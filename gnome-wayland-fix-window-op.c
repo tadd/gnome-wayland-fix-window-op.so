@@ -11,11 +11,23 @@
 static void (*orig_raise)(GdkWindow *window);
 static GDBusProxy *proxy;
 
+#define DLSYM_CHECK(f) if (dlsym(RTLD_DEFAULT, #f) == NULL) return false
+
+static bool check_gtk3_funcs(void)
+{
+    DLSYM_CHECK(gdk_wayland_window_get_type);
+    DLSYM_CHECK(gdk_window_get_window_type);
+    DLSYM_CHECK(gtk_widget_get_window);
+    DLSYM_CHECK(gtk_window_list_toplevels);
+    DLSYM_CHECK(gtk_window_get_title);
+    return true;
+}
+
 __attribute__ ((constructor))
 static void ctor(void)
 {
     orig_raise = dlsym(RTLD_NEXT, "gdk_window_raise");
-    if (orig_raise == NULL)
+    if (orig_raise == NULL || !check_gtk3_funcs())
         return;
     g_autoptr(GError) error = NULL;
     proxy = g_dbus_proxy_new_for_bus_sync(G_BUS_TYPE_SESSION, G_DBUS_PROXY_FLAGS_NONE,
