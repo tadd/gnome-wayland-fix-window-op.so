@@ -39,12 +39,6 @@ static void ctor(void)
         proxy = NULL; // ignore error and stay NULL
 }
 
-__attribute__ ((destructor))
-static void dtor(void)
-{
-    g_object_unref(proxy);
-}
-
 static bool is_managable(GdkWindow *window)
 {
     return proxy != NULL && window != NULL && GDK_IS_WAYLAND_WINDOW(window) &&
