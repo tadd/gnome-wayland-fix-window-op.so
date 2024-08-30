@@ -6,7 +6,7 @@ This preloaded library fixes some GTK3 window operations like
 
 For example, you can use the elisp function
 [`raise-frame`](https://www.gnu.org/software/emacs/manual/html_node/elisp/Raising-and-Lowering.html#index-raise_002dframe)
-normally when you're using PGTK Emacs.
+normally with PGTK Emacs.
 
 ## Scope
 
