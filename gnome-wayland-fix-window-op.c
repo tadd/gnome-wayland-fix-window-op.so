@@ -11,23 +11,27 @@
 static void (*orig_raise)(GdkWindow *window);
 static GDBusProxy *proxy;
 
-#define DLSYM_CHECK(f) if (dlsym(RTLD_DEFAULT, #f) == NULL) return false
+static bool dlsym_exist(const char *sym)
+{
+    return dlsym(RTLD_DEFAULT, sym) != NULL;
+}
 
 static bool check_gtk3_funcs(void)
 {
-    DLSYM_CHECK(gdk_wayland_window_get_type);
-    DLSYM_CHECK(gdk_window_get_window_type);
-    DLSYM_CHECK(gtk_widget_get_window);
-    DLSYM_CHECK(gtk_window_list_toplevels);
-    DLSYM_CHECK(gtk_window_get_title);
-    return true;
+    return dlsym_exist("gdk_wayland_window_get_type") &&
+        dlsym_exist("gdk_window_get_window_type") &&
+        dlsym_exist("gtk_widget_get_window") &&
+        dlsym_exist("gtk_window_list_toplevels") &&
+        dlsym_exist("gtk_window_get_title");
 }
 
 __attribute__ ((constructor))
 static void ctor(void)
 {
+    if (!check_gtk3_funcs())
+        return;
     orig_raise = dlsym(RTLD_NEXT, "gdk_window_raise");
-    if (orig_raise == NULL || !check_gtk3_funcs())
+    if (orig_raise == NULL)
         return;
     g_autoptr(GError) error = NULL;
     proxy = g_dbus_proxy_new_for_bus_sync(G_BUS_TYPE_SESSION, G_DBUS_PROXY_FLAGS_NONE,
@@ -41,7 +45,7 @@ static void ctor(void)
 
 static bool is_managable(GdkWindow *window)
 {
-    return proxy != NULL && window != NULL && GDK_IS_WAYLAND_WINDOW(window) &&
+    return proxy != NULL && GDK_IS_WAYLAND_WINDOW(window) &&
         gdk_window_get_window_type(window) == GDK_WINDOW_TOPLEVEL;
 }
 
