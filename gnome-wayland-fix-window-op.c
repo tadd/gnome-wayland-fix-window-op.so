@@ -53,7 +53,7 @@ static int cmp_gtkw_gdkw(const void *t, const void *d)
 {
     const GtkWindow *gtkw = t;
     const GdkWindow *gdkw = d;
-    g_autoptr(GdkWindow) gdkw2 = gtk_widget_get_window(GTK_WIDGET(gtkw));
+    const GdkWindow *gdkw2 = gtk_widget_get_window(GTK_WIDGET(gtkw));
     return gdkw != gdkw2; // return 0 if found
 }
 
