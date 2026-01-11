@@ -34,7 +34,7 @@ and impls to remove this hack.
 [`LD_PRELOAD`](https://man7.org/linux/man-pages/man8/ld.so.8.html#ENVIRONMENT)
 and [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/).
 
-1. Override a target function with our implementation with `LD_LIBRARY`.
+1. Override a target function with our implementation with `LD_PRELOAD`.
 2. If we don't need to change its behavior, call the original function as is.
 3. Otherwise, call the D-Bus method
    [activateByTitle](https://github.com/lucaswerkmeister/activate-window-by-title#d-bus-usage)
