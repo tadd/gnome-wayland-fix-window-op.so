@@ -59,10 +59,10 @@ static int cmp_gtkw_gdkw(const void *t, const void *d)
 
 static GtkWindow *gdkwin_to_gtkwin(GdkWindow *gdkw)
 {
-    g_autoptr(GList) all = gtk_window_list_toplevels();
+    GList *all = gtk_window_list_toplevels();
     if (all == NULL)
         return NULL;
-    GList *found = g_list_find_custom(all, gdkw, cmp_gtkw_gdkw);
+    const GList *found = g_list_find_custom(all, gdkw, cmp_gtkw_gdkw);
     return found ? found->data : NULL;
 }
 
