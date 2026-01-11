@@ -56,4 +56,4 @@ LGPL 2.1. See COPYING.md.
   O'Reilly Japan, pp 228-230, Nov. 2006.
   * [English page](http://0xcc.net/binhacks/eabout.html) also available
 * Wondering why it doesn't work by default? Here is [GTK 3.24's empty
-  code.](https://gitlab.gnome.org/GNOME/gtk/-/blob/3.24.43/gdk/wayland/gdkwindow-wayland.c#L3606-3609)
+  code.](https://gitlab.gnome.org/GNOME/gtk/-/blob/3.24.51/gdk/wayland/gdkwindow-wayland.c#L3614-3617)
