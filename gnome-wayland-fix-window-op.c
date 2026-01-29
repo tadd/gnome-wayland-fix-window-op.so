@@ -18,7 +18,7 @@ static bool dlsym_exist(const char *sym)
 
 static bool check_gtk3_funcs(void)
 {
-    return dlsym_exist("gdk_wayland_window_get_type") &&
+    return dlsym_exist("gdk_wayland_window_get_type") && // GDK_IS_WAYLAND_WINDOW(window)
         dlsym_exist("gdk_window_get_window_type") &&
         dlsym_exist("gtk_widget_get_window") &&
         dlsym_exist("gtk_window_list_toplevels") &&
@@ -39,7 +39,7 @@ static void ctor(void)
                                           "/de/lucaswerkmeister/ActivateWindowByTitle",
                                           "de.lucaswerkmeister.ActivateWindowByTitle",
                                           NULL, &error);
-    if (error)
+    if (error != NULL)
         proxy = NULL; // ignore error and stay NULL
 }
 
@@ -49,10 +49,8 @@ static bool is_managable(GdkWindow *window)
         gdk_window_get_window_type(window) == GDK_WINDOW_TOPLEVEL;
 }
 
-static int cmp_gtkw_gdkw(const void *t, const void *d)
+static int cmp_gtkw_gdkw(const void *gtkw, const void *gdkw)
 {
-    const GtkWindow *gtkw = t;
-    const GdkWindow *gdkw = d;
     const GdkWindow *gdkw2 = gtk_widget_get_window(GTK_WIDGET(gtkw));
     return gdkw != gdkw2; // return 0 if found
 }
@@ -91,7 +89,7 @@ static void activate_by_title(const char *title)
 static void my_raise(GdkWindow *window)
 {
     const char *title = gdkwin_get_title(window);
-    if (title)
+    if (title != NULL)
         activate_by_title(title);
 }
 
